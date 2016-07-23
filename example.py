@@ -29,7 +29,7 @@ surfacePlug = fnDepend.findPlug("surface")
 dgMod.connect(worldOutPlug, surfacePlug)
 
 # Create Nulls
-uValues = [(i, (i+1.0) / COUNT) for i in xrange(COUNT)]
+uValues = ((i, (i+1.0) / COUNT) for i in xrange(COUNT))
 
 outPlug = fnDepend.findPlug("out")
 inPlug = fnDepend.findPlug("inUV")
