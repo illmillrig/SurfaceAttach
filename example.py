@@ -22,7 +22,7 @@ fnDepend.setObject(surfaceDag.node())
 worldOutPlug = fnDepend.findPlug("worldSpace").elementByLogicalIndex(0)
 
 # Create SurfaceAttach
-fnDepend.create("SurfaceAttachPy")
+fnDepend.create("SurfaceAttach")
 surfacePlug = fnDepend.findPlug("surface")
 
 # Connect Surface
