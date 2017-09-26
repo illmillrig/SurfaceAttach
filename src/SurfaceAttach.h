@@ -1,9 +1,9 @@
 #pragma once
 
-#include <vector> 
-#include <array> 
+#include <vector>
+#include <array>
 
-#include <maya/MTypeId.h> 
+#include <maya/MTypeId.h>
 #include <maya/MFnTypedAttribute.h>
 #include <maya/MFnNumericAttribute.h>
 #include <maya/MFnMatrixAttribute.h>
@@ -26,63 +26,63 @@
 class SurfaceAttach : public MPxNode {
 
 public:
-	SurfaceAttach();
-	virtual ~SurfaceAttach(); 
-	virtual MStatus	compute(const MPlug& plug, MDataBlock& dataBlock) override;
-	static void* creator();
-	static MStatus initialize();
+    SurfaceAttach();
+    virtual ~SurfaceAttach();
+    virtual MStatus	compute(const MPlug& plug, MDataBlock& dataBlock) override;
+    static void* creator();
+    static MStatus initialize();
 
 private:
-	void allocate(const int dataSamples);
-	void inUVs(MFnDependencyNode &fn);
-	size_t binSearch(const double distanceU);
-	double uParmFromLength(const double distanceU);
-	void surfaceLengths(const MFnNurbsSurface &fnSurface, const double parmV);
+    void allocate(const int dataSamples);
+    void inUVs(MFnDependencyNode &fn);
+    size_t binSearch(const double distanceU);
+    double uParmFromLength(const double distanceU);
+    void surfaceLengths(const MFnNurbsSurface &fnSurface, const double parmV);
 
-	void setOutPlugs(MDataBlock dataBlock, const MFnDependencyNode &fn, const MFnNurbsSurface &fnSurface,
-					 const double &dataOffset, const bool &dataReverse, const short &dataGenus,
-					 const double &dataStaticLength, const MMatrix &dataParentInverse);
+    void setOutPlugs(MDataBlock dataBlock, const MFnDependencyNode &fn, const MFnNurbsSurface &fnSurface,
+                     const double &dataOffset, const bool &dataReverse, const short &dataGenus,
+                     const double &dataStaticLength, const MMatrix &dataParentInverse);
 
-	MTransformationMatrix matrix(const MFnNurbsSurface &fnSurface, const int plugID, const double &dataOffset,
-								 const bool &dataReverse, const short &dataGenus,
-								 const double &dataStaticLength, const MMatrix &dataParentInverse);
+    MTransformationMatrix matrix(const MFnNurbsSurface &fnSurface, const int plugID, const double &dataOffset,
+                                 const bool &dataReverse, const short &dataGenus,
+                                 const double &dataStaticLength, const MMatrix &dataParentInverse);
 
-	void calculateUV(const int plugID, const double &dataOffset, const double &dataReverse,
-					 const short &dataGenus, const double &dataStaticLength, double &parmU, double &parmV);
+    void calculateUV(const int plugID, const double &dataOffset, const double &dataReverse,
+                     const short &dataGenus, const double &dataStaticLength, double &parmU, double &parmV);
 
 public:
-	static MTypeId id;
+    static MTypeId id;
 
-	// Input Attribute Handles
-	static MObject surface;	
-	static MObject samples;
-	static MObject staticLength;
-	static MObject offset;
-	static MObject genus;
-	static MObject reverse;
-	static MObject inU;
-	static MObject inV;
-	static MObject inUV;
-	static MObject parentInverse;
+    // Input Attribute Handles
+    static MObject surface;
+    static MObject samples;
+    static MObject staticLength;
+    static MObject offset;
+    static MObject genus;
+    static MObject reverse;
+    static MObject inU;
+    static MObject inV;
+    static MObject inUV;
+    static MObject parentInverse;
 
-	// output Attribute Handles
-	static MObject translateX;		
-	static MObject translateY;		
-	static MObject translateZ;		
-	static MObject translate;		
-	static MObject rotateX;		
-	static MObject rotateY;		
-	static MObject rotateZ;		
-	static MObject rotate;		
-	static MObject out;		
+    // output Attribute Handles
+    static MObject translateX;
+    static MObject translateY;
+    static MObject translateZ;
+    static MObject translate;
+    static MObject rotateX;
+    static MObject rotateY;
+    static MObject rotateZ;
+    static MObject rotate;
+    static MObject out;
 
 private:
-	// Sampling
-	double length;
-	int sampleCount;
-	std::vector <double> sampler;
-	std::vector <MPoint> samplePoints;
-	std::vector <std::array<double, 2>> distances;
-	std::vector <std::array<double, 2>> uvInputs;
+    // Sampling
+    double length;
+    int sampleCount;
+    std::vector <double> sampler;
+    std::vector <MPoint> samplePoints;
+    std::vector <std::array<double, 2>> distances;
+    std::vector <std::array<double, 2>> uvInputs;
 };
 
