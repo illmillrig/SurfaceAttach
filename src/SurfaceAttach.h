@@ -33,27 +33,29 @@ public:
     static MStatus initialize();
 
 private:
-    void allocate(const int dataSamples);
+    void allocate(const std::int32_t dataSamples);
     void inUVs(MFnDependencyNode &fn);
-    size_t binSearch(const double distanceU);
-    double uParmFromLength(const double distanceU);
-    void surfaceLengths(const MFnNurbsSurface &fnSurface, const double parmV);
+    size_t binSearch(const double distance);
+    double parmFromLength(const double distance);
+    void surfaceLengthsU(const MFnNurbsSurface &fnSurface, const double parmV);
+    void surfaceLengthsV(const MFnNurbsSurface &fnSurface, const double parmV);
 
-    void setOutPlugs(MDataBlock dataBlock, const MFnDependencyNode &fn, const MFnNurbsSurface &fnSurface,
-                     const double &dataOffset, const bool &dataReverse, const short &dataGenus,
-                     const double &dataStaticLength, const MMatrix &dataParentInverse);
+    void setOutPlugs(MDataBlock dataBlock, const MFnNurbsSurface &fnSurface,
+                         const double dataOffset, const bool dataReverse, const short dataGenus, const double dataStaticLength,
+                         const MMatrix &dataParentInverse, const short dataDirection);
 
-    MTransformationMatrix matrix(const MFnNurbsSurface &fnSurface, const int plugID, const double &dataOffset,
-                                 const bool &dataReverse, const short &dataGenus,
-                                 const double &dataStaticLength, const MMatrix &dataParentInverse);
+    MTransformationMatrix matrix(const MFnNurbsSurface &fnSurface, const std::int32_t plugID, const double dataOffset, const bool dataReverse,
+                                     const short dataGenus, const double dataStaticLength, const MMatrix &dataParentInverse,
+                                     const short dataDirection);
 
-    void calculateUV(const int plugID, const double &dataOffset, const double &dataReverse,
-                     const short &dataGenus, const double &dataStaticLength, double &parmU, double &parmV);
+    void calculateUV(const std::int32_t plugID, const double dataOffset, const double dataReverse, const short dataGenus,
+                     const double dataStaticLength, double &parm);
 
 public:
     static MTypeId id;
 
     // Input Attribute Handles
+    static MObject direction;
     static MObject surface;
     static MObject samples;
     static MObject staticLength;
@@ -79,10 +81,10 @@ public:
 private:
     // Sampling
     double length;
-    int sampleCount;
+    std::int32_t sampleCount;
     std::vector <double> sampler;
-    std::vector <MPoint> samplePoints;
-    std::vector <std::array<double, 2>> distances;
-    std::vector <std::array<double, 2>> uvInputs;
+    std::vector <double> distances;
+    std::vector <double> uInputs;
+    std::vector <double> vInputs;
 };
 
